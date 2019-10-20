@@ -3,12 +3,10 @@ use winapi::shared::minwindef::{DWORD, BOOL};
 use winapi::um::processenv::GetStdHandle;
 use winapi::um::winbase::STD_OUTPUT_HANDLE;
 use winapi::um::winnt::HANDLE;
-use winapi::um::minwinbase::LPOVERLAPPED;
 use winapi::ctypes::c_void;
 
-
 use core::str;
-use core::ptr::{null_mut, null};
+use core::ptr::{null_mut};
 
 pub fn write_stdout(text: &str) -> BOOL {
 
@@ -19,12 +17,13 @@ pub fn write_stdout(text: &str) -> BOOL {
 
         let ok = WriteFile(
             stdout,
-            (text.as_ptr() as *const c_void),
+            text.as_ptr() as *const c_void,
             text.len() as u32,
             &mut written,
             null_mut()
         );
-
         ok
     }
 }
+
+

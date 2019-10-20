@@ -10,4 +10,5 @@ panic = "abort"
 panic = "abort"
 
 [dependencies]
-winapi = { version = "0.3.7", features = ["winuser","processthreadsapi","fileapi","processenv","winbase"] }
+winapi = { version = "0.3.7", features = ["winuser","processthreadsapi","fileapi","processenv","winbase","shellapi","heapapi"] }
+
