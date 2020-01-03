@@ -19,7 +19,7 @@ fn alloc_error_handler(layout: alloc::alloc::Layout) -> ! {
 //#[no_mangle]
 //pub extern "C" fn __CxxFrameHandler3() {
 //}
-
+/*
 #[no_mangle]
 pub unsafe extern fn memcpy(dest: *mut u8, src: *const u8,
                             n: usize) -> *mut u8 {
@@ -73,6 +73,7 @@ pub unsafe extern fn memcmp(s1: *const u8, s2: *const u8, n: usize) -> i32 {
     }
     return 0;
 }
+*/
 
 #[used]
 #[no_mangle]
@@ -81,6 +82,7 @@ pub static _fltused: i32 = 0;
 use core::panic::PanicInfo;
 
 use alloc::vec::{Vec};
+use alloc::boxed::{Box};
 
 use winapi::um::processthreadsapi::ExitProcess;
 use winapi::um::shellapi::CommandLineToArgvW;
@@ -111,12 +113,14 @@ pub extern fn mainCRTStartup() {
         let mut argc : i32 = 0;
         let argv:*mut LPWSTR = CommandLineToArgvW(GetCommandLineW(), &mut argc);
 
+        //let arg0 = alloc::string::String::from_utf16(*argv[0]).unwrap();
+        //bumsti::write_stdout(arg0.as_str());
+
         let beeMainExitCode = beeMain(argc, argv);
 
         LocalFree(argv as HLOCAL);
         ExitProcess(beeMainExitCode);
     }
-    //loop {}
 }
 
 fn beeMain(argc : i32, argv : *mut LPWSTR) -> u32 {
@@ -126,5 +130,14 @@ fn beeMain(argc : i32, argv : *mut LPWSTR) -> u32 {
 
     first_veccal.push(128);
 
-    argc as u32
+    let boxxi = Box::new(5);
+    let rc = t1(&first_veccal, &boxxi);
+    rc as u32
+}
+
+fn t1(v : &Vec<u16>, b : &Box<i32>) -> i32
+{
+    let v_sum : u16 = v.iter().sum();
+    let s_vale : i32 = **b;
+    v_sum as i32 + s_vale
 }

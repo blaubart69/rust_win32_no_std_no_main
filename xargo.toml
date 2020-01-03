@@ -1,7 +1,13 @@
 [dependencies]
 alloc = {}
-#rlibc = {}
+#compiler_builtins = { version = "^0.1.23", features = ["mem"], git = "https://github.com/rust-lang/compiler-builtins" }
+#compiler_builtins = { features = ["mem"] }
 
-#[dependencies.compiler_builtins]
+#[dependencies.core]
+#stage=0
+
+
+[dependencies.compiler_builtins]
 #git = "https://github.com/rust-lang/compiler-builtins"
-#features = ["c"]b
+#stage=1
+features = ["mem"]
